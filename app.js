@@ -46,6 +46,14 @@ app.post('/api/stuff',(req,res,next)=>
       .catch(400));
 });
 
+app.get('/api/stuff/:id', (req, res, next) => {
+
+  Item.findOne({ _id: req.params.id })
+      .then(item => res.status(200).json(item))
+      .then(console.log('200'))
+      .catch(error => res.status(400).json({ error })
+      .catch(400));
+});
 
 app.get('/api/stuff', (req, res, next) => {
 
