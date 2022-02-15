@@ -11,9 +11,9 @@ mongoose.connect('mongodb+srv://hello:world@cluster0.x3iff.mongodb.net/myFirstDa
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
-
+// cors config
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:4200');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
@@ -21,9 +21,13 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+
+
+
+
 // routers
 
-//post
+//post : add new item
 app.post('/api/stuff',(req,res,next)=>
 {
   delete req.body._id; // not necessary because this is generated on backEnd
@@ -46,6 +50,7 @@ app.post('/api/stuff',(req,res,next)=>
       .catch(400));
 });
 
+// get one item by given id
 app.get('/api/stuff/:id', (req, res, next) => {
 
   Item.findOne({ _id: req.params.id })
@@ -55,6 +60,15 @@ app.get('/api/stuff/:id', (req, res, next) => {
       .catch(400));
 });
 
+//udate ine item by given id
+app.put('/api/stuff/:id',(req, res, next)=>{
+  Item.updateOne( {_id: req.params.id}, {...req.body, _id: req.params.id})
+      .then(()=>res.status(200).json({message:'object modified'}))
+      .catch(error => res.status(400).json(error));
+
+});
+
+//git all items
 app.get('/api/stuff', (req, res, next) => {
 
   Item.find()
@@ -62,26 +76,7 @@ app.get('/api/stuff', (req, res, next) => {
       .then(console.log('200'))
       .catch(error => res.status(400).json({ error })
       .catch(400));
-/*
-  const stuff = [
-    {
-      _id: 'oeihfzeoi',
-      title: 'Mon premier objet',
-      description: 'Les infos de mon premier objet',
-      imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
-      price: 4900,
-      userId: 'qsomihvqios',
-    },
-    {
-      _id: 'oeihfzeomoihi',
-      title: 'Mon deuxième objet',
-      description: 'Les infos de mon deuxième objet',
-      imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
-      price: 2900,
-      userId: 'qsomihvqios',
-    },
-  ];
-  res.status(200).json(stuff);
-  */
 });
+
+
 module.exports = app;
