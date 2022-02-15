@@ -23,9 +23,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use('/api/stuff',itemRoutes);
-<<<<<<< HEAD
-=======
+
 app.use('/api/auth',userRoutes);
->>>>>>> dev
+
 
 module.exports = app;
