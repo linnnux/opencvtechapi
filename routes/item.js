@@ -2,25 +2,28 @@ const express = require('express');
 
 const router = express.Router();
 
+const auth = require('../middleware/auth');
+
 const itemCtrl = require('../controllers/item');
 
 
 // routers : /api/stuff ( see app.use Routes on app.js)
 
 //post : add new item
-router.post('/', itemCtrl.createItem);
+router.post('/', auth, itemCtrl.createItem);
 
 // get one item by given id
-router.get('/:id', itemCtrl.getItem);
+router.get('/:id', auth, itemCtrl.getItem);
 
 //udate ine item by given id
-router.put('/:id', itemCtrl.updateItem);
+router.put('/:id', auth, itemCtrl.updateItem);
 
 //git all items
-router.get('/', itemCtrl.getItems);
+router.get('/', auth, itemCtrl.getItems);
 
 //delete : delete one item
-router.post('/', itemCtrl.deleteItem);
+
+router.delete('/:id', auth, itemCtrl.deleteItem);
 
 
 module.exports = router;

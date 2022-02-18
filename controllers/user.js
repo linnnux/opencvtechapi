@@ -42,16 +42,14 @@ exports.login = ('/',(req,res,next)=>
               return res.status(401).json({ error: 'mdp error'});
 
             }
+            const token = jwt.sign( {userId : user._id}, 'RANDOM_SECRET_TOKEN', {expiresIn:'2h'});
+
+            console.log(token);
 
             res.status(200).json({
                                   userId: user._id,
-                                  token : jwt.sign(
-                                                    {userId : user._id},
-                                                    'RANDOM_SECRET_TOKEN',
-                                                    {expiresIn:'24h'},
-                                                    )
+                                  token : token
                                 });
-
             })
           .catch(error=>res.status(500).json({error}));
 

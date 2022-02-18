@@ -40,7 +40,7 @@ exports.getItem =('/:id', (req, res, next) => {
 exports.updateItem =('/:id',(req, res, next)=>{
   Item.updateOne( {_id: req.params.id}, {...req.body, _id: req.params.id})
       .then(()=>res.status(200).json({message:'object modified'}))
-      .catch(error => res.status(400).json(error));
+      .catch(error => res.status(400).json({error}));
 
 });
 
@@ -55,11 +55,49 @@ exports.getItems =('/', (req, res, next) => {
 });
 
 // delete one item by given id
-exports.deleteItem =('/:id', (req, res, next) => {
-
-  Item.deleteOne({ _id: req.params.id })
-      .then(item => res.status(200).json({message:'deleted'}))
-      .then(console.log('200'))
-      .catch(error => res.status(400).json({ error })
-      .catch(400));
-});
+/*
+exports.deleteItem = (req, res, next) => {
+  Item.deleteOne({_id: req.params.id}).then(
+    () => {
+      res.status(200).json({
+        message: 'Deleted!'
+      });
+    }
+  ).catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+};
+*/
+exports.deleteItem = (req, res, next) => {
+  Item.findOne({ _id: req.params.id }).then(
+    (item) => {
+      if (!item) {
+        res.status(404).json({
+          error: new Error('No such Thing!')
+        });
+      }
+      if (item.userId !== req.auth.userId) {
+        res.status(400).json({
+          error: new Error('Unauthorized request!')
+        });
+      }
+      Item.deleteOne({ _id: req.params.id }).then(
+        () => {
+          res.status(200).json({
+            message: 'Deleted!'
+          });
+        }
+      ).catch(
+        (error) => {
+          res.status(400).json({
+            error: error
+          });
+        }
+      );
+    }
+  )
+};
