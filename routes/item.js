@@ -4,13 +4,15 @@ const router = express.Router();
 
 const auth = require('../middleware/auth');
 
+const multer = require('../middleware/multer-config');
+
 const itemCtrl = require('../controllers/item');
 
 
 // routers : /api/stuff ( see app.use Routes on app.js)
 
 //post : add new item
-router.post('/', auth, itemCtrl.createItem);
+router.post('/', auth, multer, itemCtrl.createItem);
 
 // get one item by given id
 router.get('/:id', auth, itemCtrl.getItem);

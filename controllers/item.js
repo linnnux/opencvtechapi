@@ -2,12 +2,30 @@
 const Item = require('../models/Item');
 
 //post : add new item
+
+exports.createItem = (req, res, next) => {
+  const itemObject = JSON.parse(req.body.thing);
+  delete itemObject._id;
+  const item = new Item({
+    ...itemObject,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  });
+  item.save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    .catch(error => res.status(400).json({ error }));
+};
+
+/*
 exports.createItem = ('/',(req,res,next)=>
 {
-  delete req.body._id; // because this _id is generated on backEnd
+  const itemObject = JSON.parse(req.body.item);
 
-  const item = Item({
-    ...req.body,
+
+  delete itemObject._id; // because this _id is generated on backEnd
+
+   const item = Item({
+    ...itemObject,
+    imageUrl : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     /*
     title: req.body.title,
     description: req.body.description,
@@ -15,7 +33,7 @@ exports.createItem = ('/',(req,res,next)=>
     price: req.body.price,
     */
      // shortcut
-
+/*
   });
   item.save()
       .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
@@ -23,7 +41,7 @@ exports.createItem = ('/',(req,res,next)=>
       .catch(error => res.status(400).json({ error })
       .catch(400));
 });
-
+*/
 // get one item by given id
 exports.getItem =('/:id', (req, res, next) => {
 
