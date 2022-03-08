@@ -15,10 +15,10 @@ var fs  = require('fs');
 
 const app = require('./app');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 const server = http.createServer(app);
 
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 5000);
 /*
 const server = http.createServer((req,res,next) =>
                                             {res.end('salam saha, hello world');
