@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const itemRoutes = require('./routes/item.js');
 const userRoutes = require('./routes/user.js');
 const path = require('path');
+let url = 'https://mmnopencvtech.herokuapp.com/api/';
 
 mongoose.connect('mongodb+srv://hello:world@cluster0.x3iff.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -15,7 +16,7 @@ mongoose.connect('mongodb+srv://hello:world@cluster0.x3iff.mongodb.net/myFirstDa
 
 // cors config
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Origin', url);
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
