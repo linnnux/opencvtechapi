@@ -15,13 +15,13 @@ const itemCtrl = require('../controllers/item');
 router.post('/', auth, multer, itemCtrl.createItem);
 
 // get one item by given id
-router.get('/:id', auth, itemCtrl.getItem);
+router.get('/:id', itemCtrl.getItem);
 
 //udate ine item by given id
 router.put('/:id', auth, itemCtrl.updateItem);
 
 //git all items
-router.get('/', auth, itemCtrl.getItems);
+router.get('/',  itemCtrl.getItems);
 
 //delete : delete one item
 
