@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const itemRoutes = require('./routes/item.js');
 const userRoutes = require('./routes/user.js');
 const path = require('path');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-module.exports.bcrypt = bcrypt;
+//const bcrypt = require('bcrypt');
+//const saltRounds = 10;
+//module.exports.bcrypt = bcrypt;
 
 let url = 'http://localhost:4200';
 
