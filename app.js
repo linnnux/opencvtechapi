@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const itemRoutes = require('./routes/item.js');
 const userRoutes = require('./routes/user.js');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+module.exports.bcrypt = bcrypt;
+
 let url = 'http://localhost:4200';
 
 mongoose.connect('mongodb+srv://hello:world@cluster0.x3iff.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
